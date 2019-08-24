@@ -35,18 +35,18 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
-      <HintPath>..\..\..\ProgramFiles\Steam\SteamApps\common\Cities_Skylines\Cities_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <HintPath>S:\Steam\steamapps\common\Cities_Skylines\Cities_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="ColossalManaged">
-      <HintPath>..\..\..\ProgramFiles\Steam\SteamApps\common\Cities_Skylines\Cities_Data\Managed\ColossalManaged.dll</HintPath>
+      <HintPath>S:\Steam\steamapps\common\Cities_Skylines\Cities_Data\Managed\ColossalManaged.dll</HintPath>
     </Reference>
     <Reference Include="ICities">
-      <HintPath>..\..\..\ProgramFiles\Steam\SteamApps\common\Cities_Skylines\Cities_Data\Managed\ICities.dll</HintPath>
+      <HintPath>S:\Steam\steamapps\common\Cities_Skylines\Cities_Data\Managed\ICities.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="UnityEngine">
-      <HintPath>..\..\..\ProgramFiles\Steam\SteamApps\common\Cities_Skylines\Cities_Data\Managed\UnityEngine.dll</HintPath>
+      <HintPath>S:\Steam\steamapps\common\Cities_Skylines\Cities_Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -232,9 +232,14 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>mkdir "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(SolutionName)"
-del "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(SolutionName)\$(TargetFileName)"
-xcopy /y "$(TargetPath)" "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(SolutionName)"</PostBuildEvent>
+    <PostBuildEvent>xcopy /Y "$(TargetPath)" "$(ProjectDir)\_requiredDLLs\"
+rem xcopy /Y "$(TargetDir)0Harmony.dll" "$(ProjectDir)\_requiredDLLs\"
+rem xcopy /Y "$(ProjectDir)\_requiredDLLs\*" "S:\Steam\steamapps\workshop\content\255710\???????\"
+xcopy /Y "$(ProjectDir)\_requiredDLLs\*" "C:\Users\Leandro\AppData\Local\Colossal Order\Cities_Skylines\Addons\Mods\FRA\"</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>rem del /q "S:\Steam\steamapps\workshop\content\255710\?????????\"
+del /q "$(ProjectDir)\_requiredDLLs"</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

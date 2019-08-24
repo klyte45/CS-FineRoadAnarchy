@@ -108,33 +108,33 @@ namespace FineRoadAnarchy
         private void LoadResources()
         {
             string[] spriteNames = new string[]
-			{
-				"Anarchy",
-				"AnarchyDisabled",
-				"AnarchyFocused",
-				"AnarchyHovered",
-				"AnarchyPressed",
-				"Bending",
-				"BendingDisabled",
-				"BendingFocused",
-				"BendingHovered",
-				"BendingPressed",
-				"Snapping",
-				"SnappingDisabled",
-				"SnappingFocused",
-				"SnappingHovered",
-				"SnappingPressed",
-				"Collision",
-				"CollisionDisabled",
-				"CollisionFocused",
-				"CollisionHovered",
-				"CollisionPressed",
-				"Grid",
-				"GridDisabled",
-				"GridFocused",
-				"GridHovered",
-				"GridPressed"
-			};
+            {
+                "Anarchy",
+                "AnarchyDisabled",
+                "AnarchyFocused",
+                "AnarchyHovered",
+                "AnarchyPressed",
+                "Bending",
+                "BendingDisabled",
+                "BendingFocused",
+                "BendingHovered",
+                "BendingPressed",
+                "Snapping",
+                "SnappingDisabled",
+                "SnappingFocused",
+                "SnappingHovered",
+                "SnappingPressed",
+                "Collision",
+                "CollisionDisabled",
+                "CollisionFocused",
+                "CollisionHovered",
+                "CollisionPressed",
+                "Grid",
+                "GridDisabled",
+                "GridFocused",
+                "GridHovered",
+                "GridPressed"
+            };
 
             m_atlas = ResourceLoader.CreateTextureAtlas("FineRoadAnarchy", spriteNames, "FineRoadAnarchy.Icons.");
 

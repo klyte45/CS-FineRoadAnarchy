@@ -13,6 +13,7 @@ using ColossalFramework.UI;
 
 using FineRoadAnarchy.Redirection;
 using FineRoadAnarchy.Detours;
+using System.Linq;
 
 namespace FineRoadAnarchy
 {
@@ -38,7 +39,7 @@ namespace FineRoadAnarchy
         {
             try
             {
-                m_netTool = GameObject.FindObjectOfType<NetTool>();
+                m_netTool = GameObject.FindObjectsOfType<NetTool>().Where(x => x.GetType() == typeof(NetTool)).FirstOrDefault();
                 if (m_netTool == null)
                 {
                     DebugUtils.Log("Net Tool not found");
@@ -310,8 +311,8 @@ namespace FineRoadAnarchy
         private void LoadChirperAtlas()
         {
             string[] spriteNames = new string[]
-			{
-				"Chirper",
+            {
+                "Chirper",
                 "ChirperChristmas",
                 "ChirperChristmasDisabled",
                 "ChirperChristmasFocused",
@@ -428,7 +429,7 @@ namespace FineRoadAnarchy
                 "ThumbChirperTechFocused",
                 "ThumbChirperTechHovered",
                 "ThumbChirperTechPressed"
-			};
+            };
 
             chirperAtlasAnarchy = ResourceLoader.CreateTextureAtlas("ChirperAtlasAnarchy", spriteNames, "FineRoadAnarchy.ChirperAtlas.");
         }

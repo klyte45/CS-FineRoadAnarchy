@@ -1,20 +1,21 @@
-﻿using UnityEngine;
-using ColossalFramework.Plugins;
-
+﻿using ColossalFramework;
 using System;
-using ColossalFramework;
+using UnityEngine;
 
 namespace FineRoadAnarchy
 {
     public class DebugUtils
     {
-        public const string modPrefix = "[Fine Road Anarchy " + ModInfo.version + "] ";
+        public static readonly string modPrefix = "[Fine Road Anarchy " + ModInfo.Version + "] ";
 
         public static SavedBool hideDebugMessages = new SavedBool("hideDebugMessages", FineRoadAnarchy.settingsFileName, true, true);
 
         public static void Log(string message)
         {
-            if (hideDebugMessages.value) return;
+            if (hideDebugMessages.value)
+            {
+                return;
+            }
 
             if (message == m_lastLog)
             {

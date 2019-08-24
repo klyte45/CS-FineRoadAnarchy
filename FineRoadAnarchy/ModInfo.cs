@@ -1,14 +1,10 @@
-﻿using ICities;
-
-using System;
-using System.Linq;
-
-using ColossalFramework;
+﻿using ColossalFramework;
 using ColossalFramework.UI;
+using ICities;
+using System;
+using System.Reflection;
 
-using ColossalFramework.PlatformServices;
-using ColossalFramework.Plugins;
-
+[assembly: AssemblyVersion("2.0.0.0")]
 namespace FineRoadAnarchy
 {
     public class ModInfo : IUserMod
@@ -27,27 +23,21 @@ namespace FineRoadAnarchy
             }
         }
 
-        public string Name
-        {
-            get { return "Fine Road Anarchy " + version; }
-        }
+        public string Name => "Klyte's Fine Road Anarchy " + Version;
 
-        public string Description
-        {
-            get { return "This mod adds additional options when building road"; }
-        }
+        public string Description => "This mod adds additional options when building road";
 
         public void OnSettingsUI(UIHelperBase helper)
         {
             try
             {
-                UIHelper group = helper.AddGroup(Name) as UIHelper;
-                UIPanel panel = group.self as UIPanel;
+                var group = helper.AddGroup(Name) as UIHelper;
+                var panel = group.self as UIPanel;
 
-                UICheckBox checkBox = (UICheckBox)group.AddCheckbox("Disable debug messages logging", DebugUtils.hideDebugMessages.value, (b) =>
-                {
-                    DebugUtils.hideDebugMessages.value = b;
-                });
+                var checkBox = (UICheckBox) group.AddCheckbox("Disable debug messages logging", DebugUtils.hideDebugMessages.value, (b) =>
+                 {
+                     DebugUtils.hideDebugMessages.value = b;
+                 });
                 checkBox.tooltip = "If checked, debug messages won't be logged.";
 
                 group.AddSpace(10);
@@ -62,7 +52,26 @@ namespace FineRoadAnarchy
                 DebugUtils.LogException(e);
             }
         }
+        public static string MinorVersion => MajorVersion + "." + typeof(ModInfo).Assembly.GetName().Version.Build;
+        public static string MajorVersion => typeof(ModInfo).Assembly.GetName().Version.Major + "." + typeof(ModInfo).Assembly.GetName().Version.Minor;
+        public static string FullVersion => MinorVersion + " r" + typeof(ModInfo).Assembly.GetName().Version.Revision;
 
-        public const string version = "1.3.5";
+        public static string Version
+        {
+            get {
+                if (typeof(ModInfo).Assembly.GetName().Version.Minor == 0 && typeof(ModInfo).Assembly.GetName().Version.Build == 0)
+                {
+                    return typeof(ModInfo).Assembly.GetName().Version.Major.ToString();
+                }
+                if (typeof(ModInfo).Assembly.GetName().Version.Build > 0)
+                {
+                    return MinorVersion;
+                }
+                else
+                {
+                    return MajorVersion;
+                }
+            }
+        }
     }
 }
