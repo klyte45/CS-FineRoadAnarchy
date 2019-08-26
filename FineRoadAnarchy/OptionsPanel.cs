@@ -30,12 +30,12 @@ namespace FineRoadAnarchy
             autoLayoutPadding = new RectOffset(0, 4, 0, 0);
             autoLayoutDirection = LayoutDirection.Horizontal;
 
-            m_anarchy = CreateCheckBox(this, "Anarchy", "Toggle road anarchy", false);
-            m_bending = CreateCheckBox(this, "Bending", "Toggle road bending", true);
-            m_snapping = CreateCheckBox(this, "Snapping", "Toggle node snapping", true);
-            m_collision = CreateCheckBox(this, "Collision", "Toggle road collision", FineRoadAnarchy.collision);
+            m_anarchy = CreateCheckBox(this, "Anarchy", "Toggle road anarchy", FineRoadAnarchy.IsEditor ? false : FineRoadAnarchy.saved_anarchy);
+            m_bending = CreateCheckBox(this, "Bending", "Toggle road bending", FineRoadAnarchy.IsEditor ? true : FineRoadAnarchy.saved_bending);
+            m_snapping = CreateCheckBox(this, "Snapping", "Toggle node snapping", FineRoadAnarchy.IsEditor ? true : FineRoadAnarchy.saved_snapping);
+            m_collision = CreateCheckBox(this, "Collision", "Toggle road collision", FineRoadAnarchy.IsEditor ? true : FineRoadAnarchy.saved_collision);
 
-            if((ToolManager.instance.m_properties.m_mode & ItemClass.Availability.AssetEditor) != ItemClass.Availability.None)
+            if(FineRoadAnarchy.IsEditor)
             {
                 m_grid = CreateCheckBox(this, "Grid", "Toggle editor grid", true);
             }

@@ -33,7 +33,13 @@ namespace FineRoadAnarchy
 
         private OptionsPanel m_panel;
 
+        public static SavedBool saved_anarchy = new SavedBool("Anarchy", settingsFileName, false, true);
+        public static SavedBool saved_bending = new SavedBool("Bending", settingsFileName, true, true);
+        public static SavedBool saved_snapping = new SavedBool("Snapping", settingsFileName, true, true);
+        public static SavedBool saved_collision = new SavedBool("Collision", settingsFileName, true, true);
+
         private int m_tries;
+        internal static bool IsEditor;
 
         public void Start()
         {
@@ -62,8 +68,9 @@ namespace FineRoadAnarchy
                     }
                 }
 
+                IsEditor = !((ToolManager.instance.m_properties.m_mode & ItemClass.Availability.AssetEditor) == ItemClass.Availability.None);
+
                 Redirector<NetInfoDetour>.Deploy();
-                collision = (ToolManager.instance.m_properties.m_mode & ItemClass.Availability.AssetEditor) == ItemClass.Availability.None;
 
                 if (chirperAtlasAnarchy == null)
                 {
@@ -79,10 +86,10 @@ namespace FineRoadAnarchy
                 }
                 else
                 {
-                    m_panel.m_anarchy.isChecked = false;
-                    m_panel.m_bending.isChecked = true;
-                    m_panel.m_snapping.isChecked = true;
-                    m_panel.m_collision.isChecked = collision;
+                    m_panel.m_anarchy.isChecked = IsEditor ? false : saved_anarchy;
+                    m_panel.m_bending.isChecked = IsEditor? true : saved_bending;
+                    m_panel.m_snapping.isChecked = IsEditor ? true : saved_snapping;
+                    m_panel.m_collision.isChecked = IsEditor ? true : saved_collision;
                 }
 
                 DebugUtils.Log("Initialized");
@@ -148,7 +155,7 @@ namespace FineRoadAnarchy
         public void OnDestroy()
         {
             Redirector<NetInfoDetour>.Revert();
-            anarchy = false;
+            disable_anarchy();
         }
 
         public static bool anarchy
@@ -180,20 +187,26 @@ namespace FineRoadAnarchy
                     }
                     else
                     {
-                        DebugUtils.Log("Disabling anarchy");
-                        Redirector<NetToolDetour>.Revert();
-                        Redirector<BuildingToolDetour>.Revert();
-                        Redirector<RoadAIDetour>.Revert();
-                        Redirector<PedestrianPathAIDetour>.Revert();
-                        Redirector<TrainTrackAIDetour>.Revert();
-                        Redirector<NetAIDetour>.Revert();
-
-                        if (chirperButton != null && chirperAtlasNormal != null)
-                        {
-                            chirperButton.atlas = chirperAtlasNormal;
-                        }
+                        disable_anarchy();
                     }
+                    if (!IsEditor) saved_anarchy.value = value;
                 }
+            }
+        }
+
+        private static void disable_anarchy()
+        {
+            DebugUtils.Log("Disabling anarchy");
+            Redirector<NetToolDetour>.Revert();
+            Redirector<BuildingToolDetour>.Revert();
+            Redirector<RoadAIDetour>.Revert();
+            Redirector<PedestrianPathAIDetour>.Revert();
+            Redirector<TrainTrackAIDetour>.Revert();
+            Redirector<NetAIDetour>.Revert();
+
+            if (chirperButton != null && chirperAtlasNormal != null)
+            {
+                chirperButton.atlas = chirperAtlasNormal;
             }
         }
 
@@ -212,11 +225,27 @@ namespace FineRoadAnarchy
                     {
                         bendingPrefabs.m_buffer[i].m_enableBendingSegments = value;
                     }
+                    if (!IsEditor) saved_bending.value = value;
                 }
             }
         }
 
-        public static bool snapping = true;
+        private static bool _snapping = true;
+        public static bool snapping
+        {
+            get
+            {
+                return _snapping;
+            }
+            set
+            {
+                if (_snapping != value)
+                {
+                    _snapping = value;
+                    if (!IsEditor) saved_snapping.value = value;
+                }
+            }
+        }
 
         public static bool collision
         {
@@ -245,6 +274,7 @@ namespace FineRoadAnarchy
                         Redirector<CollisionNetNodeDetour>.Deploy();
                         CollisionZoneBlockDetour.Deploy();
                     }
+                    if (!IsEditor) saved_collision.value = value;
                 }
             }
         }
