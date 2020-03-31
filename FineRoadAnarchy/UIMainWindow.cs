@@ -35,7 +35,9 @@ namespace FineRoadAnarchy
             DebugUtils.Log("UIMainWindow created");
         }
 
-        public override void Update()
+        public override void Update() => CustomUpdate();
+
+        private void CustomUpdate()
         {
             isVisible = FineRoadAnarchy.instance.m_netTool.enabled;
 
