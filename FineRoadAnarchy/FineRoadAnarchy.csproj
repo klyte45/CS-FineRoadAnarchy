@@ -60,6 +60,7 @@
     <Compile Include="Detours\NetToolDetour.cs" />
     <Compile Include="OptionsKeymapping.cs" />
     <Compile Include="OptionsPanel.cs" />
+    <Compile Include="PrefabUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Redirection\RedirectionHelper.cs" />
     <Compile Include="Redirection\RedirectionUtil.cs" />
