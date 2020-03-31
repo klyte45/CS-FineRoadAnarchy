@@ -233,12 +233,7 @@ namespace FineRoadAnarchy
                     {
                         DebugUtils.Log("Enabling collision");
                         Redirector<CollisionBuildingManagerDetour>.Revert();
-
-                        foreach (var prefabToModify in PrefabUtil.GetAllPrefabs())
-                        {
-                            prefabToModify.m_canCollide = true;
-                        }
-
+                        Redirector<CollisionNetManagerDetour>.Revert();
                         Redirector<CollisionNetNodeDetour>.Revert();
                         CollisionZoneBlockDetour.Revert();
                     }
@@ -246,12 +241,7 @@ namespace FineRoadAnarchy
                     {
                         DebugUtils.Log("Disabling collision");
                         Redirector<CollisionBuildingManagerDetour>.Deploy();
-
-                        foreach (var prefabToModify in PrefabUtil.GetAllPrefabs())
-                        {
-                            prefabToModify.m_canCollide = false;
-                        }
-
+                        Redirector<CollisionNetManagerDetour>.Deploy();
                         Redirector<CollisionNetNodeDetour>.Deploy();
                         CollisionZoneBlockDetour.Deploy();
                     }

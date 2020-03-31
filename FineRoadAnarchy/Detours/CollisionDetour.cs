@@ -21,7 +21,7 @@ namespace FineRoadAnarchy.Detours
     public class CollisionNetManagerDetour
     {
         [RedirectMethod]
-        public bool OverlapQuad(Quad2 quad, float minY, float maxY, ItemClass.CollisionType collisionType, ItemClass.Layer layers, ushort ignoreNode1, ushort ignoreNode2, ushort ignoreSegment, ulong[] segmentMask)
+        public bool OverlapQuad(Quad2 quad, float minY, float maxY, ItemClass.CollisionType collisionType, ItemClass.Layer requireLayers, ItemClass.Layer forbidLayers, ushort ignoreNode1, ushort ignoreNode2, ushort ignoreSegment, ulong[] segmentMask)
         {
             return false;
         }
