@@ -394,7 +394,7 @@ namespace FineRoadAnarchy
         private static ToolBase.ToolErrors CheckNodeHeights(NetInfo info, FastList<NetTool.NodePosition> nodeBuffer)
         {
             bool flag = info.m_netAI.BuildUnderground();
-            bool flag2 = info.m_netAI.SupportUnderground();
+            bool flag2 = flag || info.m_netAI.SupportUnderground();
             if (info.m_netAI.LinearMiddleHeight())
             {
                 if (nodeBuffer.m_size >= 3)

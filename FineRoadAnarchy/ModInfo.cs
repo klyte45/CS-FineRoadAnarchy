@@ -4,7 +4,7 @@ using ICities;
 using System;
 using System.Reflection;
 
-[assembly: AssemblyVersion("2.0.2.0")]
+[assembly: AssemblyVersion("2.0.2.1")]
 namespace FineRoadAnarchy
 {
     public class ModInfo : IUserMod
